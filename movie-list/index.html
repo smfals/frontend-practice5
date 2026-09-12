@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>电影清单</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{padding:20px;font-family:system-ui}
+h1{margin-bottom:16px}
+.form-row{margin-bottom:12px}
+input{padding:6px 8px;width:220px;margin-right:8px}
+button{padding:6px 12px;cursor:pointer}
+.error{color:red;margin:8px 0;min-height:20px}
+.movie-item{border:1px solid #ccc;padding:10px;margin:8px 0;border-radius:4px}
+</style>
+</head>
+<body>
+<h1>🎬 电影清单</h1>
+
+<div class="form-row">
+  <input id="name-input" placeholder="电影名称">
+  <input id="author-input" placeholder="导演">
+  <button id="add-btn">新增</button>
+</div>
+<div class="error" id="err"></div>
+
+<div id="list"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
