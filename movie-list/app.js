@@ -4,7 +4,11 @@ const addBtn = document.querySelector('#add-btn');
 const errEl = document.querySelector('#err');
 const listEl = document.querySelector('#list');
 
-let movies = [];
+// ✅第3阶段改动1：启动时从localStorage读取，没有存档则为空数组
+let movies = JSON.parse(localStorage.getItem('movies') || '[]');
+
+// ✅第3阶段改动2：新增save保存函数
+const save = () => localStorage.setItem('movies', JSON.stringify(movies));
 
 function render(){
   listEl.innerHTML = '';
@@ -26,31 +30,31 @@ addBtn.onclick = ()=>{
   const author = authorInput.value.trim();
   errEl.textContent = '';
 
-  // ✅输入校验：名称至少3个字符，红色提示（满足检查点6）
   if(name.length <3){
     errEl.textContent = '电影名称至少3个字！';
     return;
   }
 
   movies.push({name, author});
+  save(); // ✅第3阶段改动3：新增后保存
   nameInput.value='';
   authorInput.value='';
   render();
 }
 
-// ✅事件委托：父元素listEl统一处理编辑删除按钮（自主研究任务：事件委托）
 listEl.onclick = e=>{
   const i = Number(e.target.dataset.i);
   if(isNaN(i)) return;
 
   if(e.target.classList.contains('del')){
-    // 删除：splice删掉数组第i项
     movies.splice(i,1);
+    save(); // ✅第3阶段改动4：删除后保存
     render();
   }else if(e.target.classList.contains('edit')){
     const newName = prompt("修改电影名称", movies[i].name);
     if(newName && newName.trim().length>=3){
       movies[i].name = newName.trim();
+      save(); // ✅第3阶段改动5：编辑后保存
       render();
     }
   }
