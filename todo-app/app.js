@@ -3,8 +3,8 @@ const input = document.querySelector('#task-input');
 const tip = document.querySelector('#tip');
 const list = document.querySelector('#task-list');
 
-let tasks = [];
-
+let tasks = JSON.parse(localStorage.getItem('tasks') || '[]');
+const save = () => localStorage.setItem('tasks', JSON.stringify(tasks));
 const filters = document.querySelector('.filters');
 let currentFilter = 'all'; // all / active / done
 
@@ -28,6 +28,7 @@ const render = () => {
     if (task.done) li.classList.add('done');
     li.addEventListener('click', () => {
       task.done = !task.done;
+save();
       render();
     });
     list.appendChild(li);
@@ -42,6 +43,7 @@ form.addEventListener('submit', (e) => {
     return;
   }
   tasks.push({ text: text, done: false });
+save();
   tip.textContent = '';
   input.value = '';
   render();
